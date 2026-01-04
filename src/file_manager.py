@@ -1,7 +1,7 @@
 import csv
 import os
 import shutil
-from expense import Expense
+from .expense import Expense
 
 class FileManager:
     def __init__(self, filename):

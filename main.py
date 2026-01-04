@@ -1,6 +1,6 @@
 
-from expense_manager import ExpenseManager
-from reports import Reports
+from src.expense_manager import ExpenseManager
+from src.reports import Reports
 
 def main():
     manager = ExpenseManager()
@@ -13,7 +13,8 @@ def main():
         print("5.Average_expense")
         print("6. Monthly Reports")
         print("7.Filter expenses by category ")
-        print("8.Exit")
+        print("8.Backup Data")
+        print("9.Exit")
 
         choice = input("Choose: ")
 
@@ -53,6 +54,11 @@ def main():
                     print(f"{e.date} | {e.category} | {e.amount} | {e.description}")
                     
         elif choice == "8":
+            manager.file_manager.create_backup()
+            print("Backup created successfully")
+            
+                    
+        elif choice == "9":
             print("Bye 👋")
             break
         else:

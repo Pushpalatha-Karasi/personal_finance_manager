@@ -1,7 +1,7 @@
-from expense import Expense
-from file_manager import FileManager
-from reports import Reports
-from utils import (clean_text, validate_amount, validate_date)
+from .expense import Expense
+from .file_manager import FileManager
+from .reports import Reports
+from .utils import clean_text, validate_amount, validate_date
 
 class ExpenseManager:
     def __init__(self):
@@ -26,7 +26,7 @@ class ExpenseManager:
         while True:
             
             raw_amount = input("Amount: ")
-            amount = validate_amount(amount)
+            amount = validate_amount(raw_amount)
         
             if amount is not None:
                 break
