@@ -1,12 +1,16 @@
 import csv
 import os
 import shutil
-from .expense import Expense
+from src.expense import Expense
+
 
 class FileManager:
     def __init__(self, filename):
         self.filename = filename
-        self.backup_file = "backup/expenses_backup.csv"
+        self.backup_folder = "backup"
+        self.backup_file = os.path.join(self.backup_folder, "expenses_backup.csv")
+
+    # ---------------- LOAD EXPENSES ---------------- #
 
     def load_expenses(self):
         expenses = []
@@ -14,16 +18,22 @@ class FileManager:
         if not os.path.exists(self.filename):
             return expenses
 
-        with open(self.filename, "r") as file:
+        with open(self.filename, "r", newline="") as file:
             reader = csv.reader(file)
-            header = next(reader, None)
+            next(reader, None)  # skip header
 
             for row in reader:
-                expenses.append(
-                    Expense(row[0], row[1], float(row[2]), row[3])
+                expense = Expense(
+                    date=row[0],
+                    category=row[1],
+                    amount=float(row[2]),
+                    description=row[3]
                 )
+                expenses.append(expense)
 
         return expenses
+
+    # ---------------- SAVE EXPENSE ---------------- #
 
     def save_expense(self, expense):
         file_exists = os.path.exists(self.filename)
@@ -43,6 +53,8 @@ class FileManager:
 
         self.create_backup()
 
+    # ---------------- BACKUP ---------------- #
+
     def create_backup(self):
-        os.makedirs("backup", exist_ok=True)
+        os.makedirs(self.backup_folder, exist_ok=True)
         shutil.copy(self.filename, self.backup_file)
