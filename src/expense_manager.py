@@ -35,16 +35,16 @@ class ExpenseManager:
         return clean_text(raw_category)
 
     def _get_valid_amount(self):
-        while True:
+         while True:
             raw_amount = input("Amount: ")
             amount = validate_amount(raw_amount)
             if amount is not None:
-                return amount
-            print("❌ Invalid amount. Enter a positive number.")
+                    return amount
+                    print("❌ Invalid amount. Enter a positive number.")
 
     def _get_description(self):
-        raw_description = input("Description: ")
-        return clean_text(raw_description)
+            raw_description = input("Description: ")
+            return clean_text(raw_description)
 
     def view_expenses(self):
         if not self.expenses:
@@ -52,3 +52,18 @@ class ExpenseManager:
             return
         for e in self.expenses:
             e.display()
+
+    
+    def filter_by_category(self):
+        category = clean_text(input("Enter category: "))
+            
+        filtered_expenses = [
+        e for e in self.expenses if e.category == category
+        ]
+
+        if not filtered_expenses:
+            print("No expenses found for this category")
+            return
+
+        for expense in filtered_expenses:
+            expense.display()
